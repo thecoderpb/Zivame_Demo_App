@@ -3,47 +3,50 @@ package com.assignment.zivame
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import com.google.gson.GsonBuilder
-import com.google.gson.JsonParser
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import retrofit2.Retrofit
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 //API : https://my-json-server.typicode.com/nancymadan/assignment/db
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var manager: RecyclerView.LayoutManager
+    private lateinit var myAdapter: RecyclerView.Adapter<*>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        
+
+        manager = LinearLayoutManager(this)
+        getAllData()
+
     }
 
-    private fun getDataFromAPI(){
+    private fun getAllData(){
+        Api.retrofitService.getDataFromAPI().enqueue(object: Callback<ResponseData> {
+            override fun onResponse(
+                call: Call<ResponseData>,
+                response: Response<ResponseData>
+            ) {
+                if(response.isSuccessful){
 
-        val retrofit = Retrofit.Builder()
-            .baseUrl("https://my-json-server.typicode.com")
-            .build()
+                    recyclerView = findViewById<RecyclerView>(R.id.recycler_view).apply{
+                        Log.d("API Content",response.body().toString())
 
-        val service = retrofit.create(APIService::class.java)
-        CoroutineScope(Dispatchers.IO).launch {
-
-            val response = service.getProducts()
-            withContext(Dispatchers.Main) {
-                if (response.isSuccessful) {
-                    val gson = GsonBuilder().setPrettyPrinting().create()
-                    val prettyJson = gson.toJson(
-                        JsonParser.parseString(
-                            response.body()?.string()
-                        )
-                    )
-                    Log.d("Pretty Printed JSON :", prettyJson)
-
-                } else {
-                    Log.e("RETROFIT_ERROR", response.code().toString())
-
+                        myAdapter = MyAdapter(response.body()!!.products)
+                        layoutManager = manager
+                        adapter = myAdapter
+                    }
                 }
             }
-        }
+
+            override fun onFailure(call: Call<ResponseData>, t: Throwable) {
+                t.printStackTrace()
+                Log.d("Failed Fetching content","null")
+            }
+        })
     }
 }
