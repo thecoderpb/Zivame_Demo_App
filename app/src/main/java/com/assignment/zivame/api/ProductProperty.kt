@@ -1,4 +1,4 @@
-package com.assignment.zivame
+package com.assignment.zivame.api
 
 import com.squareup.moshi.Json
 

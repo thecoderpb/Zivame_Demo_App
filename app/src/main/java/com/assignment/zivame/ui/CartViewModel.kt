@@ -16,6 +16,6 @@ class CartViewModel(private val repository: CartRepository) : ViewModel() {
         repository.delete(item)
     }
 
-    fun allGroceryItems() = repository.allGroceryItems()
+    fun allCartItems() = repository.allCartItems()
 
 }

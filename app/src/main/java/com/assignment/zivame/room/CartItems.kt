@@ -17,7 +17,10 @@ data class CartItems(
     var itemQuantity: Int,
 
     @ColumnInfo(name = "itemPrice")
-    var itemPrice: Int
+    var itemPrice: Int,
+
+    @ColumnInfo(name = "itemImageURL")
+    var itemImageURL: String
 ) {
 
     @PrimaryKey(autoGenerate = true)
