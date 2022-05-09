@@ -18,6 +18,10 @@ class CartViewModel(private val repository: CartRepository) : ViewModel() {
         repository.delete(item)
     }
 
+    fun nukeTable() = viewModelScope.launch {
+        repository.nukeTable()
+    }
+
     fun allCartItems() = repository.allCartItems()
     fun allCartItemsCount() = repository.allCartItemsCount()
     fun allCartItemsPrice() = repository.allCartItemsPrice()

@@ -2,8 +2,11 @@ package com.assignment.zivame
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.util.Log
 import android.view.View
 import android.widget.Button
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -16,6 +19,8 @@ import com.assignment.zivame.room.CartRepository
 import com.assignment.zivame.ui.CartRecyclerViewAdapter
 import com.assignment.zivame.ui.CartViewModel
 import com.assignment.zivame.ui.CartViewModelFactory
+import kotlinx.coroutines.job
+import java.lang.Exception
 
 class CartActivity : AppCompatActivity() {
 
@@ -42,10 +47,23 @@ class CartActivity : AppCompatActivity() {
         val cartTotalPriceText = findViewById<TextView>(R.id.totalPriceText)
         val cartShippingCostText = findViewById<TextView>(R.id.shippingText)
         val cartGrandTotalText = findViewById<TextView>(R.id.grandTotalText)
+        val myCartText = findViewById<TextView>(R.id.myCartText)
+
+        val progressBar = findViewById<ProgressBar>(R.id.progressBar)
+        val orderStatus = findViewById<TextView>(R.id.orderSuccess)
+        val viewOverlay = findViewById<View>(R.id.view_overlay)
 
         val hr2 = findViewById<View>(R.id.hr2)
+        val hr = findViewById<View>(R.id.hr)
 
         cartRecyclerView = findViewById<RecyclerView>(R.id.cart_recycler_view)
+
+        orderStatus.visibility = View.INVISIBLE
+        myCartText.visibility = View.VISIBLE
+        hr.visibility = View.VISIBLE
+        viewOverlay.visibility = View.INVISIBLE
+        viewOverlay.alpha = 0.5f
+
         // Initialised View Model
         viewModel = ViewModelProvider(this, factory)[CartViewModel::class.java]
         val cartAdapter = CartRecyclerViewAdapter(listOf(), viewModel)
@@ -75,7 +93,6 @@ class CartActivity : AppCompatActivity() {
 
                 hr2.visibility = View.INVISIBLE
 
-                cartEmptyText.visibility = View.VISIBLE
             } else{
                 cartCheckoutBtn.visibility = View.VISIBLE
                 cartGrandTotal.visibility = View.VISIBLE
@@ -105,6 +122,31 @@ class CartActivity : AppCompatActivity() {
                 cartShippingCost.text = "$shippingCost Rs"
                 cartGrandTotal.text = (it+shippingCost).toString() + " Rs"
             }
+        }
+        cartCheckoutBtn.setOnClickListener{
+
+            Log.i("Progress bar","start")
+
+            progressBar.visibility = View.VISIBLE
+            viewOverlay.visibility = View.VISIBLE
+            viewOverlay.bringToFront()
+            Thread(Runnable{
+                try {
+                    //progressBar.progress
+                    Thread.sleep(3000)
+                    progressBar.visibility = View.INVISIBLE
+                    viewModel.nukeTable()
+                    runOnUiThread(Runnable {
+                        cartEmptyText.visibility = View.INVISIBLE
+                        viewOverlay.visibility = View.INVISIBLE
+                        orderStatus.visibility = View.VISIBLE
+                    })
+
+                } catch (e: InterruptedException) {
+                    e.printStackTrace()
+                }
+            }).start()
+            //progressBar.visibility = View.INVISIBLE
         }
 
     }

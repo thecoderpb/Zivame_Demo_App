@@ -1,11 +1,10 @@
 package com.assignment.zivame.room
 
-import androidx.lifecycle.LiveData
-
 class CartRepository(private val db: CartDatabase) {
 
     suspend fun insert(item: CartItems) = db.getCartDao().insert(item)
-    suspend fun delete(item: CartItems) = db.getCartDao().nukeTable(item)
+    suspend fun delete(item: CartItems) = db.getCartDao().deleteItem(item)
+    suspend fun nukeTable() = db.getCartDao().nukeTable()
 
     fun allCartItems() = db.getCartDao().getAllCartItems()
     fun allCartItemsCount() = db.getCartDao().getAllCartItemsCount()

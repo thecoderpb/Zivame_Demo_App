@@ -10,7 +10,10 @@ interface CartDAO {
     suspend fun insert(item: CartItems)
 
     @Delete
-    suspend fun nukeTable(item: CartItems)
+    suspend fun deleteItem(item: CartItems)
+
+    @Query("DELETE FROM cart_items")
+    suspend fun nukeTable()
 
     @Query("SELECT * FROM cart_items")
     fun getAllCartItems(): LiveData<List<CartItems>>
