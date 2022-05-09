@@ -1,5 +1,6 @@
 package com.assignment.zivame.ui
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.assignment.zivame.R
 import com.assignment.zivame.room.CartItems
 import com.bumptech.glide.Glide
+import java.util.logging.Handler
 
 class CartRecyclerViewAdapter(var list: List<CartItems>, private val viewModel: CartViewModel) :
     RecyclerView.Adapter<CartRecyclerViewAdapter.CartViewHolder>() {
@@ -26,10 +28,10 @@ class CartRecyclerViewAdapter(var list: List<CartItems>, private val viewModel: 
     override fun onBindViewHolder(holder: CartViewHolder, position: Int) {
         val currentPosition = list[position]
         holder.itemView.findViewById<TextView>(R.id.itemName).text = currentPosition.itemName
-        holder.itemView.findViewById<TextView>(R.id.itemPrice).text = "${currentPosition.itemPrice}"
-        holder.itemView.findViewById<TextView>(R.id.itemQuantity).text = "${currentPosition.itemQuantity}"
+        holder.itemView.findViewById<TextView>(R.id.itemPrice).text = "\u20B9"+"${currentPosition.itemPrice}"
+        holder.itemView.findViewById<TextView>(R.id.itemQuantity).text = "Quantity:${currentPosition.itemQuantity}"
         //holder.itemView.findViewById<ImageView>(R.id.itemImageView).setImageURI(list[position].itemImageURL)
-        Glide.with(view!!.context).load(list[position].itemImageURL).centerCrop().into(view!!.findViewById<ImageView>(R.id.itemImageView))
+        Glide.with(view!!.context).load(currentPosition.itemImageURL).centerCrop().into(view!!.findViewById(R.id.itemImageView))
         holder.itemView.findViewById<ImageView>(R.id.itemDelete).setOnClickListener {
             viewModel.delete(currentPosition)
         }

@@ -7,11 +7,15 @@
     tools:context=".MainActivity">
 
     <View
+        android:id="@+id/hr"
         android:layout_width="match_parent"
         android:layout_height="2dp"
+        android:layout_marginTop="57dp"
         android:background="@android:color/black"
-        app:layout_constraintTop_toTopOf="@id/product_recycler_view"
-        tools:layout_editor_absoluteX="-1dp" />
+        android:paddingBottom="2dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/product_recycler_view"
@@ -29,12 +33,14 @@
         app:layout_constraintVertical_bias="1.0" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/myCartText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="56dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
         android:text="@string/gadgets"
+        android:textColor="#000000"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/product_recycler_view"
@@ -48,10 +54,74 @@
         android:layout_height="34dp"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/product_recycler_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.666"
         app:srcCompat="@drawable/ic_shopping_cart" />
+
+    <TextView
+        android:id="@+id/errorText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="50dp"
+        android:paddingEnd="50dp"
+        android:text="Oops! Failed to connect"
+        android:textColor="#000000"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/product_recycler_view"
+        app:layout_constraintEnd_toEndOf="@+id/product_recycler_view"
+        app:layout_constraintStart_toStartOf="@+id/product_recycler_view"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/errorImage"
+        android:layout_width="40dp"
+        android:layout_height="38dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/errorText"
+        app:layout_constraintEnd_toEndOf="@+id/errorText"
+        app:layout_constraintStart_toStartOf="@+id/errorText"
+        app:srcCompat="@drawable/ic_error_black" />
+
+    <TextView
+        android:id="@+id/errorText2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Please try later"
+        android:textColor="#000000"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/errorText"
+        app:layout_constraintStart_toStartOf="@+id/errorText"
+        app:layout_constraintTop_toBottomOf="@+id/errorText" />
+
+    <Button
+        android:id="@+id/checkoutCentreButton"
+        android:layout_width="176dp"
+        android:layout_height="63dp"
+        android:layout_marginBottom="32dp"
+        android:text="Checkout"
+        app:cornerRadius="24dp"
+        app:layout_constraintBottom_toBottomOf="@+id/product_recycler_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/badge"
+        android:layout_width="20dp"
+        android:layout_height="22dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/badge_circle"
+        android:text="1"
+        android:textColor="#FFF"
+        android:textAlignment="center"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@+id/cartBtn"
+        app:layout_constraintStart_toStartOf="@+id/cartBtn" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

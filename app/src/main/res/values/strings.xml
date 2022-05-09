@@ -2,4 +2,5 @@
     <string name="app_name">Zivame Demo App</string>
     <string name="Rs">\u20B9</string>
     <string name="gadgets">GADGETS</string>
+    <string name="checkout">CHECKOUT</string>
 </resources>

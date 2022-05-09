@@ -14,4 +14,16 @@ interface CartDAO {
 
     @Query("SELECT * FROM cart_items")
     fun getAllCartItems(): LiveData<List<CartItems>>
+
+    @Query("SELECT COUNT(*) FROM cart_items")
+    fun getAllCartItemsCount(): LiveData<Int>
+
+    @Query("SELECT SUM(itemPrice) FROM cart_items")
+    fun getAllCartItemPrice(): LiveData<Int>
+
+    @Query("SELECT itemQuantity FROM cart_items WHERE itemName=:productName")
+    fun getProductQuantity(productName: String): LiveData<Int>
+
+    @Query("UPDATE cart_items SET itemQuantity=:itemQuantity WHERE itemName=:productName")
+    fun incrementItemQuantity(itemQuantity: Int, productName: String)
 }
