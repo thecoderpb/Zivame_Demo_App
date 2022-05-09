@@ -18,6 +18,9 @@ interface CartDAO {
     @Query("SELECT * FROM cart_items")
     fun getAllCartItems(): LiveData<List<CartItems>>
 
+    @Query("SELECT * FROM cart_items")
+    fun getCartItemsTest() : List<CartItems>
+
     @Query("SELECT COUNT(*) FROM cart_items")
     fun getAllCartItemsCount(): LiveData<Int>
 

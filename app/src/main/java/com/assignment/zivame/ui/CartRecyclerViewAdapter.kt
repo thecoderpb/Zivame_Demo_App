@@ -1,6 +1,5 @@
 package com.assignment.zivame.ui
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.assignment.zivame.R
 import com.assignment.zivame.room.CartItems
 import com.bumptech.glide.Glide
-import java.util.logging.Handler
 
 class CartRecyclerViewAdapter(var list: List<CartItems>, private val viewModel: CartViewModel) :
     RecyclerView.Adapter<CartRecyclerViewAdapter.CartViewHolder>() {
